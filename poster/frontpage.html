@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World's News on One Map, Tuesday 24 November 2026</title>
+<style>
+  :root {
+    --sea: #0f2236; --sea2: #13304b; --land: #e9dcbf; --ink: #14161b; --paper: #fbf7ee; --muted: #4a4e58;
+    --gold: #ffcf5a; --red: #c62b2b;
+    --eu: #3559b8; --me: #b5601a; --af: #2f8a45; --as: #7a46b5; --am: #1f7bc4; --oc: #0f8f99; --gl: #3a3d45;
+    --official: #1f6b3a; --reported: #b5651d; --claim: #c62b2b; --today: #1f5fa8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1024px; height: 1024px; overflow: hidden; }
+  body { position: relative; background: var(--sea); font-family: "Inter", "DejaVu Sans", sans-serif; color: var(--ink); }
+
+  /* header */
+  .hdr { position: absolute; left: 0; top: 0; width: 1024px; height: 96px; padding: 8px 14px 0; color: #fff;
+         display: flex; justify-content: space-between; align-items: flex-start; }
+  .hdr .k { font: 900 12px/1 "Inter"; letter-spacing: .22em; color: var(--gold); }
+  .hdr h1 { font: 900 52px/1 "DejaVu Serif", serif; letter-spacing: -1.2px; margin-top: 5px; white-space: nowrap; }
+  .hdr .sub { font: 600 12.5px/1.2 "Inter"; color: #c9d6e6; margin-top: 4px; }
+  .hdr .side { text-align: right; font: 700 11px/1.3 "Inter"; color: #c9d6e6; display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+  .hdr .side b { color: #fff; font-size: 13px; display: block; }
+
+  #map { position: absolute; left: 226px; top: 244px; }
+  #lines { position: absolute; left: 0; top: 0; pointer-events: none; }
+
+  /* cards */
+  .card { position: absolute; background: var(--paper); border-radius: 5px; overflow: hidden;
+          border-top: 4px solid var(--c); box-shadow: 0 2px 6px rgba(0,0,0,.35); display: flex; flex-direction: column; }
+  .card svg.art { display: block; width: 100%; flex: none; }
+  .card .b { padding: 3px 6px 4px; }
+  .kick { display: flex; justify-content: space-between; align-items: center; gap: 4px; font: 900 9.4px/1 "Inter"; letter-spacing: .04em; color: var(--c); white-space: nowrap; }
+  .num { display: inline-block; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); color: #fff; font: 900 9px/15px "Inter";
+         text-align: center; margin-right: 4px; letter-spacing: 0; }
+  .st { font: 900 7.6px/1 "Inter"; letter-spacing: .05em; color: #fff; padding: 2px 3px 1px; border-radius: 2px; }
+  .card h3 { font: 800 12.4px/1.14 "Inter"; margin-top: 3px; letter-spacing: -.1px; }
+  .card.lead h3 { font: 900 17.5px/1.08 "DejaVu Serif", serif; letter-spacing: 0; }
+  .card.lead p { font: 500 10.8px/1.24 "Inter"; color: var(--muted); margin-top: 3px; }
+  .card.lead .num { background: var(--red); }
+
+  /* bottom band */
+  .band { position: absolute; left: 0; top: 832px; width: 1024px; height: 192px; background: var(--paper); padding: 6px 10px 0; }
+  .band .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .band h4 { font: 900 10.5px/1 "Inter"; letter-spacing: .08em; color: var(--c); border-bottom: 2px solid var(--c); padding-bottom: 3px; margin-bottom: 2px; }
+  .band .it { font: 600 10.4px/1.17 "Inter"; padding: 1.5px 0; border-bottom: 1px dotted #d3ccbb; }
+  .band .it .n { color: var(--red); font-weight: 900; margin-right: 3px; }
+  .band .it b { font-weight: 900; font-size: 9.2px; color: var(--muted); }
+  .foot { position: absolute; left: 10px; right: 10px; bottom: 4px; white-space: nowrap; display: flex; justify-content: space-between; align-items: center;
+          font: 600 9.4px/1.25 "Inter"; color: var(--muted); border-top: 1.5px solid var(--ink); padding-top: 3px; gap: 10px; }
+  .foot .chk { color: var(--ink); }
+  .foot .chk b { color: var(--red); }
+  .lg b { color: #fff; padding: 1px 3px; border-radius: 2px; font-size: 8.4px; margin-left: 4px; }
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <div class="k">THE WORLD'S NEWS ON ONE MAP</div>
+    <h1>Tuesday 24 November 2026</h1>
+    <div class="sub"><span id="sub"></span> <span class="lg"><b style="background:var(--official)">OFFICIAL</b> on record <b style="background:var(--reported)">REPORTED</b> media <b style="background:var(--claim)">CLAIM</b> one side says <b style="background:var(--today)">TODAY</b> scheduled</span></div>
+  </div>
+  <div class="side">
+    <div><b>Full moon tonight</b>Map shading: night<br>side at 12:00 UTC</div>
+    <svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="#fbf0c4"/><circle cx="15" cy="16" r="5" fill="#e6d59c"/><circle cx="27" cy="27" r="6" fill="#e6d59c"/><circle cx="27" cy="12" r="2.6" fill="#e6d59c"/><circle cx="13" cy="30" r="3" fill="#e6d59c"/></svg>
+  </div>
+</div>
+
+<svg id="map" width="572" height="316"></svg>
+<svg id="lines" width="1024" height="832"></svg>
+<div id="cards"></div>
+
+<div class="band">
+  <div class="cols" id="cols"></div>
+  <div class="foot">
+    <span class="chk"><b>DATE CHECK</b> All stories reported on Tue 24 Nov 2026. <b>Left out as other days' news:</b> COP31 ends without a deal (22 Nov) · BepiColombo reaches Mercury (21 Nov) · ICJ Myanmar ruling (19 Nov)</span>
+  </div>
+</div>
+
+<script>
+const REG = { EU: 'var(--eu)', ME: 'var(--me)', AF: 'var(--af)', AS: 'var(--as)', AM: 'var(--am)', OC: 'var(--oc)', GL: 'var(--gl)', SP: 'var(--today)' };
+const ST = { O: ['OFFICIAL', 'var(--official)'], R: ['REPORTED', 'var(--reported)'], C: ['CLAIM', 'var(--claim)'], T: ['TODAY', 'var(--today)'] };
+
+// ---------- small drawing helpers ----------
+const flame = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 C-7 -10 3 -14 0 -26 C9 -16 12 -9 6 0 Z" fill="#ff7a1a"/><path d="M1 0 C-2 -7 3 -9 2 -16 C7 -10 7 -5 4 0 Z" fill="#ffd23f"/></g>`;
+const smoke = (x, y) => `<path d="M${x} ${y} c-8 -8 6 -12 -2 -22 c-6 -8 6 -12 0 -20" stroke="#6b6e75" stroke-width="6" fill="none" stroke-linecap="round" opacity=".45"/>`;
+const tanker = (x, y) => `<g transform="translate(${x} ${y})"><path d="M-24 0 H20 L26 -8 H-28 Z" fill="#2b2d33"/><rect x="-22" y="-13" width="32" height="5" fill="#7a2a1c"/><rect x="11" y="-21" width="9" height="13" fill="#eee" stroke="#2b2d33"/>${flame(-10, -13, .8)}${smoke(-10, -34)}</g>`;
+const T = (x, y, s, c, t, a = 'middle', w = 900) => `<text x="${x}" y="${y}" text-anchor="${a}" font-family="Inter" font-weight="${w}" font-size="${s}" fill="${c}">${t}</text>`;
+
+// every scene is drawn on a 200 x 60 canvas (two leads on 280 x 120) and cropped to the card
+const ART = {
+  hormuz: `<svg viewBox="0 0 280 120">
+    <rect width="280" height="120" fill="#cfe3ee"/>
+    <path d="M0 0 H280 V34 C254 40 230 30 208 44 C186 58 166 48 150 54 C134 59 118 48 100 44 C72 38 46 30 22 36 C12 38 4 34 0 36 Z" fill="#e6dcc6" stroke="#8d846f" stroke-width="1.5"/>
+    <path d="M0 120 V84 C26 80 52 90 78 84 C104 78 120 88 132 104 C138 92 144 78 152 74 C162 70 170 82 168 94 C188 98 222 92 256 98 C268 100 276 98 280 98 V120 Z" fill="#e6dcc6" stroke="#8d846f" stroke-width="1.5"/>
+    ${T(214, 22, 13, '#6b604a', 'IRAN')}${T(70, 108, 11, '#6b604a', 'UAE')}${T(226, 112, 11, '#6b604a', 'OMAN')}
+    ${T(8, 56, 9, '#2b5873', 'STRAIT OF HORMUZ', 'start', 800)}
+    ${tanker(112, 72)}${tanker(180, 74)}${tanker(244, 84)}
+    <g fill="#14161b"><circle cx="124" cy="80" r="3.5"/><circle cx="192" cy="82" r="3.5"/><circle cx="256" cy="92" r="3.5"/></g>
+    <rect x="8" y="64" width="68" height="17" rx="2" fill="#c62b2b"/>${T(42, 76.5, 10.5, '#fff', '3 TANKERS')}
+  </svg>`,
+  nvidia: `<svg viewBox="0 0 200 60">
+    <rect width="200" height="60" fill="#14213d"/>
+    <rect x="6" y="5" width="110" height="50" rx="3" fill="#0b1226" stroke="#3b4c7a"/>
+    ${T(12, 18, 9, '#9fb3d9', 'NVDA', 'start')}${T(110, 18, 9, '#5ee38b', '+31%', 'end')}
+    ${T(12, 32, 9, '#9fb3d9', 'KOSPI', 'start')}${T(110, 32, 9, '#5ee38b', '≈+5%', 'end')}
+    ${T(12, 46, 9, '#9fb3d9', 'ASX 200', 'start')}${T(110, 46, 9, '#5ee38b', '+1.8%', 'end')}
+    <polyline points="124,52 136,48 146,50 156,42 166,44 176,32 186,24 194,10" fill="none" stroke="#5ee38b" stroke-width="3"/>
+    <path d="M194 10 l-9 1 l5 7 z" fill="#5ee38b"/>
+  </svg>`,
+  zap: `<svg viewBox="0 0 280 120">
+    <rect width="280" height="120" fill="#d9dde3"/><rect y="104" width="280" height="16" fill="#8b8f96"/>
+    <rect x="30" y="22" width="120" height="82" fill="#cbbfa6" stroke="#14161b" stroke-width="1.5"/>
+    <g fill="#3a4250">${Array.from({length: 5}, (_, r) => Array.from({length: 6}, (_, c) => `<rect x="${38 + c * 18}" y="${30 + r * 15}" width="10" height="8"/>`).join('')).join('')}</g>
+    <path d="M110 22 L150 22 L150 66 L136 56 L128 68 L118 52 L110 60 Z" fill="#d9dde3"/>
+    <path d="M110 22 L118 52 L128 68 L136 56 L150 66" fill="none" stroke="#14161b" stroke-width="1.5"/>
+    ${smoke(132, 34)}${flame(130, 56, 1)}
+    <rect x="162" y="34" width="110" height="46" rx="3" fill="#fff" stroke="#14161b"/>
+    ${T(217, 53, 13, '#c62b2b', '2 DEAD')}${T(217, 71, 10, '#14161b', '40 HURT · 4 CHILDREN')}
+  </svg>`,
+  estonia: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#e9eef4"/><g transform="translate(18 14)"><rect width="50" height="11" fill="#0072ce"/><rect y="11" width="50" height="11" fill="#14161b"/><rect y="22" width="50" height="11" fill="#fff" stroke="#999" stroke-width=".5"/></g><g transform="translate(132 14)"><rect width="50" height="11" fill="#fff" stroke="#999" stroke-width=".5"/><rect y="11" width="50" height="11" fill="#0039a6"/><rect y="22" width="50" height="11" fill="#d52b1e"/></g><path d="M82 6 V56 M118 6 V56" stroke="#c62b2b" stroke-width="3"/><path d="M82 22 H118 M82 40 H118" stroke="#c62b2b" stroke-width="2" stroke-dasharray="4 3"/></svg>`,
+  eu: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#dfe6f5"/><rect x="18" y="8" width="66" height="44" fill="#003399"/><g fill="#ffcc00">${Array.from({length: 12}, (_, i) => `<circle cx="${(51 + 14 * Math.cos(i * Math.PI / 6)).toFixed(2)}" cy="${(30 + 14 * Math.sin(i * Math.PI / 6)).toFixed(2)}" r="2"/>`).join('')}</g><rect x="102" y="12" width="80" height="36" rx="2" fill="#fff" stroke="#14161b"/>${T(142, 27, 9, '#14161b', 'BANKS · CRYPTO')}${T(142, 40, 9, '#14161b', 'SPORT')}<circle cx="176" cy="46" r="8" fill="none" stroke="#c62b2b" stroke-width="2"/><path d="M170 52 L182 40" stroke="#c62b2b" stroke-width="2"/></svg>`,
+  chess: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#e8f0e4"/><g>${Array.from({length: 4}, (_, r) => Array.from({length: 8}, (_, c) => `<rect x="${64 + c * 9}" y="${8 + r * 9}" width="9" height="9" fill="${(r + c) % 2 ? '#3a3d45' : '#f4efe2'}"/>`).join('')).join('')}</g>${T(32, 32, 9, '#14161b', 'GUKESH')}${T(168, 32, 9, '#14161b', 'SINDAROV')}${T(100, 54, 8.5, '#1f5fa8', 'GAME 1 · 15:00 GENEVA')}</svg>`,
+  banks: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#efe6d4"/><path d="M56 10 L90 22 H22 Z" fill="#cbbfa6" stroke="#14161b"/><g fill="#cbbfa6" stroke="#14161b"><rect x="27" y="23" width="7" height="22"/><rect x="42" y="23" width="7" height="22"/><rect x="57" y="23" width="7" height="22"/><rect x="72" y="23" width="7" height="22"/><rect x="22" y="45" width="68" height="6"/></g><circle cx="56" cy="32" r="18" fill="none" stroke="#c62b2b" stroke-width="3"/><path d="M43 45 L69 19" stroke="#c62b2b" stroke-width="3"/><text x="148" y="38" text-anchor="middle" font-family="DejaVu Serif" font-weight="900" font-size="19" fill="#1b2a4a">$14.7bn</text></svg>`,
+  mexico: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#eef0ea"/><g transform="translate(16 12)"><rect width="20" height="34" fill="#006847"/><rect x="20" width="20" height="34" fill="#fff" stroke="#bbb" stroke-width=".5"/><rect x="40" width="20" height="34" fill="#ce1126"/><circle cx="30" cy="17" r="6" fill="#8a5a2b"/></g><path d="M92 30 H148" stroke="#14161b" stroke-width="2"/><path d="M148 30 l-8 -5 v10 z" fill="#14161b"/><path d="M160 20 L178 38 M178 20 L160 38" stroke="#c62b2b" stroke-width="3.5"/>${T(120, 22, 8.5, '#4a4e58', 'TO THE US')}${T(120, 46, 8.5, '#4a4e58', 'DENIED')}</svg>`,
+  ariane: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#1b2a4a"/><g fill="#fff">${[[20,10],[44,40],[150,12],[186,44],[120,30],[30,50],[170,26]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="1.1"/>`).join('')}</g><rect x="74" y="6" width="13" height="32" rx="5" fill="#f2f2f2"/><rect x="67" y="18" width="6" height="20" rx="2" fill="#ddd"/><rect x="88" y="18" width="6" height="20" rx="2" fill="#ddd"/>${flame(79, 60, .75)}${T(146, 36, 13, '#ffcf5a', '36 SATS')}</svg>`,
+  turkey: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#e6f0f6"/><path d="M30 50 V28 H110 V50 Z" fill="#fff" stroke="#14161b"/><path d="M26 28 L70 12 L114 28 Z" fill="#fff" stroke="#14161b"/><g fill="#14161b">${[40,52,64,76,88,100].map(x => `<rect x="${x}" y="31" width="3" height="16"/>`).join('')}</g><g transform="translate(150 34)"><circle r="14" fill="#8a5a2b"/><g fill="#c0392b"><circle cx="-12" cy="-12" r="6"/><circle cx="0" cy="-16" r="6"/><circle cx="12" cy="-12" r="6"/></g><circle cx="14" cy="4" r="7" fill="#a0522d"/><path d="M20 4 l6 2 l-6 2z" fill="#f0a500"/><circle cx="16" cy="2" r="1.3" fill="#14161b"/></g></svg>`,
+  korea: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#dbe9f4"/><path d="M12 52 C50 44 74 18 120 12 C150 10 182 18 188 30 C176 44 136 50 76 56 Z" fill="none" stroke="#7a46b5" stroke-width="2" stroke-dasharray="5 3"/>${T(124, 40, 9, '#7a46b5', 'KADIZ', 'start')}<path d="M52 36 L76 26 L72 24 L98 14 L91 22 L101 26 L77 32 L79 37 Z" fill="#14161b"/><path d="M144 52 L162 44 L159 42 L176 36 L171 42 L178 43 L162 47 L163 51 Z" fill="#1f7bc4"/></svg>`,
+  icc: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#efe9f6"/><path d="M80 8 V50 M58 50 H102 M50 16 H110" stroke="#14161b" stroke-width="2.5"/><path d="M50 16 L41 32 H59 Z M110 16 L101 32 H119 Z" fill="#d5c7a8" stroke="#14161b"/><circle cx="80" cy="8" r="4" fill="#bc002d"/>${T(80, 45, 9, '#14161b', 'ICC')}<rect x="138" y="16" width="44" height="28" fill="#fff" stroke="#999"/><circle cx="160" cy="30" r="8.5" fill="#bc002d"/></svg>`,
+  exam: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#f1ecf8"/><rect x="24" y="10" width="62" height="44" rx="2" fill="#fff" stroke="#14161b"/><path d="M32 22 H78 M32 31 H78 M32 40 H64" stroke="#14161b" stroke-width="2.5"/><rect x="100" y="14" width="34" height="36" rx="4" fill="#14161b"/><rect x="104" y="18" width="26" height="26" fill="#7fd1ff"/>${T(117, 35, 9, '#14161b', 'AI')}<path d="M96 52 L138 12" stroke="#c62b2b" stroke-width="3"/>${T(168, 36, 12, '#1f6b3a', '$375K')}</svg>`,
+  fire: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#f2e4d0"/><rect x="40" y="20" width="120" height="34" fill="#c9b79a" stroke="#14161b"/><path d="M40 20 L60 10 L80 20 L100 10 L120 20 L140 10 L160 20" fill="#a8977a" stroke="#14161b"/>${flame(68, 24, .9)}${flame(100, 22, 1.1)}${flame(132, 24, .9)}${T(100, 48, 9, '#14161b', 'CANDY FACTORY')}</svg>`,
+  asx: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#e3f3f4"/><g fill="#c62b2b">${[0,1,2,3,4,5,6,7].map(i => `<rect x="${18 + i * 14}" y="${14 + i * 4}" width="9" height="${10 + i * 1}"/>`).join('')}</g><rect x="132" y="12" width="12" height="40" fill="#1f6b3a"/>${T(150, 30, 12, '#1f6b3a', '+1.8%', 'start')}${T(150, 46, 8.5, '#4a4e58', 'streak ends', 'start', 700)}<path d="M10 56 H190" stroke="#14161b"/></svg>`,
+  gaza: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#ece3cf"/><g fill="#d5c7a8" stroke="#8d846f"><rect x="20" y="26" width="32" height="28"/><rect x="56" y="16" width="26" height="38"/><rect x="130" y="24" width="36" height="30"/></g><path d="M88 54 L98 34 L114 42 L122 54 Z" fill="#b9ab8c"/>${flame(105, 40, 1)}${smoke(105, 18)}</svg>`,
+  sudan: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#f1e2c4"/><rect x="74" y="20" width="54" height="34" fill="#fff" stroke="#14161b"/>${T(101, 42, 13, '#1f7bc4', 'UN')}<rect x="16" y="32" width="44" height="22" fill="#d5c7a8" stroke="#8d846f"/><rect x="140" y="28" width="44" height="26" fill="#d5c7a8" stroke="#8d846f"/><g stroke="#14161b" stroke-width="2"><path d="M20 10 H42 M31 5 V15"/><path d="M158 8 H180 M169 3 V13"/></g><path d="M44 12 L76 22 M156 10 L126 20" stroke="#c62b2b" stroke-width="1.5" stroke-dasharray="3 2"/>${flame(124, 24, .7)}</svg>`,
+  yemen: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#f3e6cf"/><rect x="18" y="28" width="70" height="22" rx="4" fill="#e1a23a" stroke="#14161b"/><g fill="#9cc7e6">${[0,1,2,3].map(i => `<rect x="${26 + i * 15}" y="33" width="10" height="8"/>`).join('')}</g><circle cx="34" cy="51" r="5" fill="#14161b"/><circle cx="72" cy="51" r="5" fill="#14161b"/><path d="M118 12 L160 7 L152 15 L182 17 L156 22 L163 30 Z" fill="#555a63"/><path d="M146 28 L122 44" stroke="#c62b2b" stroke-width="2" stroke-dasharray="3 2"/>${flame(120, 52, .7)}</svg>`,
+  naira: `<svg viewBox="0 0 200 60"><rect width="200" height="60" fill="#e6f2e7"/><rect x="18" y="12" width="20" height="36" fill="#008751"/><rect x="38" y="12" width="20" height="36" fill="#fff" stroke="#bbb" stroke-width=".5"/><rect x="58" y="12" width="20" height="36" fill="#008751"/><text x="138" y="42" text-anchor="middle" font-family="DejaVu Serif" font-weight="900" font-size="26" fill="#1b2a4a">23%</text>${T(138, 55, 8, '#4a4e58', 'RATE HELD', 'middle', 800)}</svg>`,
+};
+
+// ---------- the stories on cards ----------
+const CARDS = [
+  // Europe, along the top
+  { n: 1, r: 'EU', s: 'O', place: 'ZAPORIZHZHIA, UKRAINE', art: 'zap', lead: 1, h: 'Russian bomb hits a block of flats: 2 dead, 40 hurt',
+    p: 'Four children among the wounded, the regional governor says.', ll: [35.1, 47.8], box: [8, 100, 340, 138] },
+  { n: 4, r: 'EU', s: 'O', place: 'TALLINN', art: 'estonia', h: 'Moscow says Estonia is "on the verge of open war" as it shuts the border', ll: [24.7, 59.4], box: [354, 100, 216, 138] },
+  { n: 5, r: 'EU', s: 'O', place: 'BRUSSELS', art: 'eu', h: 'EU unveils new Russia sanctions on banks, crypto and sport', ll: [4.4, 50.8], box: [576, 100, 216, 138] },
+  { n: 6, r: 'SP', s: 'T', place: 'GENEVA · CHESS', art: 'chess', h: 'Gukesh v Sindarov, both 20: youngest world title match opens', ll: [6.1, 46.2], box: [798, 100, 218, 138] },
+  // Americas, down the left
+  { n: 2, r: 'GL', s: 'O', place: 'SANTA CLARA → ASIA', art: 'nvidia', lead: 1, h: "Huang back as Nvidia CEO; Asia's markets rally",
+    p: 'Trump says he "made the deal". Nvidia +31%; Seoul and Sydney rally.', ll: [-122, 37.4], box: [8, 244, 212, 182] },
+  { n: 7, r: 'AM', s: 'O', place: 'WASHINGTON', art: 'banks', h: "US blacklists Iran's shadow banks; $14.7bn flagged", ll: [-77, 38.9], box: [8, 432, 212, 96] },
+  { n: 8, r: 'AM', s: 'O', place: 'MEXICO', art: 'mexico', h: 'Mexico refuses to extradite cartel boss "El Chapo Isidro"', ll: [-99.1, 19.4], box: [8, 534, 212, 96] },
+  { n: 9, r: 'SP', s: 'O', place: 'KOUROU · SPACE', art: 'ariane', h: 'Ariane 6 lofts 36 Amazon Leo satellites', ll: [-52.6, 5.2], box: [8, 636, 212, 92] },
+  { n: 10, r: 'AM', s: 'T', place: 'WHITE HOUSE', art: 'turkey', h: 'Turkeys Freedom and Feathers up for the 79th pardon', ll: [-77, 38.9], box: [8, 734, 212, 92] },
+  // Asia and Oceania, down the right
+  { n: 11, r: 'AS', s: 'O', place: 'EAST SEA, KOREA', art: 'korea', h: "Russian warplanes enter Korea's air defense zone; jets scramble", ll: [131, 37.5], box: [804, 244, 212, 112] },
+  { n: 12, r: 'AS', s: 'O', place: 'TOKYO', art: 'icc', h: 'Japan to pay its full 2027 ICC dues early, before US sanctions', ll: [139.7, 35.7], box: [804, 362, 212, 112] },
+  { n: 13, r: 'AS', s: 'O', place: 'SEOUL', art: 'exam', h: 'Up to $375,000 offered to catch students cheating with AI', ll: [127, 37.5], box: [804, 480, 212, 112] },
+  { n: 14, r: 'AS', s: 'O', place: 'BANTEN, INDONESIA', art: 'fire', h: 'Candy-factory fire toll hits 24; about 30 still missing', ll: [106.3, -6.2], box: [804, 598, 212, 112] },
+  { n: 15, r: 'OC', s: 'O', place: 'SYDNEY', art: 'asx', h: 'ASX 200 jumps 1.8%, ending an 8-day losing streak', ll: [151.2, -33.9], box: [804, 716, 212, 110] },
+  // Middle East and Africa, under the map
+  { n: 3, r: 'ME', s: 'C', place: 'STRAIT OF HORMUZ', art: 'hormuz', lead: 1, h: 'Iran says mines set three oil tankers ablaze',
+    p: 'IRGC navy says the ships hit mines and burned, and warns vessels off "unauthorized routes" amid the US blockade. Not independently confirmed.', ll: [56.5, 26.5], box: [226, 566, 284, 260] },
+  { n: 16, r: 'ME', s: 'R', place: 'GAZA', art: 'gaza', h: "Israeli strike kills Hamas's internal security chief", ll: [34.4, 31.4], box: [516, 566, 138, 127] },
+  { n: 17, r: 'AF', s: 'R', place: 'KHARTOUM', art: 'sudan', h: 'RSF drones hit the capital; 4 dead, UN building damaged', ll: [32.5, 15.6], box: [660, 566, 138, 127] },
+  { n: 18, r: 'ME', s: 'C', place: 'YEMEN', art: 'yemen', h: 'Houthis say Saudi strikes killed 41 civilians in a day', ll: [44, 15.3], box: [516, 699, 138, 127] },
+  { n: 19, r: 'AF', s: 'O', place: 'ABUJA', art: 'naira', h: "Nigeria's central bank holds its key rate at 23%", ll: [7.5, 9.1], box: [660, 699, 138, 127] },
+];
+
+// ---------- the bottom band: more stories by region ----------
+const MORE = [
+  ['MORE FROM EUROPE', 'EU', [
+    ['MOSCOW', 'Leak-based study: 700,000+ Russian troops killed'],
+    ['RIGA', "Latvia's leader: war may hit a 'tipping point' in 2027"],
+    ['KYIV', 'Zelensky asks allies for more Patriot missiles'],
+    ['UN, NEW YORK', 'Russia rules out a new Black Sea grain deal'],
+    ['STRASBOURG', "MEPs debate Hungary's rule-of-law reforms"]]],
+  ['MORE FROM THE MIDDLE EAST & AFRICA', 'ME', [
+    ['S. LEBANON', 'Israeli strikes hit the south despite the ceasefire'],
+    ['GAZA', 'Oxfam report calls the strip a "toxic wasteland"'],
+    ['TIGRAY', 'Amnesty seeks war-crimes probe of army shelling'],
+    ['TRIPOLI', 'PM warns Libya risks being dragged into Ukraine war'],
+    ['DAMASCUS', 'US weighs training Syrian troops in demining']]],
+  ['MORE FROM ASIA & MARKETS', 'AS', [
+    ['DHAKA', 'Hasina says she returns 16 Dec; govt: "in handcuffs"'],
+    ['TAIPEI', 'AI-driven Chinese influence push before 28 Nov vote'],
+    ['SEOUL', 'KOSPI, KOSDAQ up 5-6%; buy sidecar triggered'],
+    ['SINGAPORE', 'US blacklists Megaspeed over Nvidia chip diversion'],
+    ['LONDON', 'Brent slips to about $90 despite the Hormuz mines']]],
+  ['MORE FROM THE AMERICAS', 'AM', [
+    ['IOWA', 'Trump tells Army to delay lead-explosive blast'],
+    ['LOS ANGELES', 'Rep. Jimmy Gomez resigns after ethics report'],
+    ['NEW YORK', "Storms threaten Thanksgiving trips, Macy's balloons"],
+    ['PENTAGON', "Hegseth's ex-chief of staff urges him to quit"],
+    ['BRASÍLIA', "Brazil's fiscal package goes to Lula to sign"]]],
+];
+
+// ---------- map: equirectangular, lon -130..160, lat 75..-50 ----------
+const MX = 226, MY = 244, MW = 572, MH = 316;
+const px = lon => (lon + 130) / 290 * MW, py = lat => (75 - lat) / 125 * MH;
+const LAND = [
+  [[-168,66],[-156,71],[-140,70],[-120,70],[-95,72],[-82,73],[-80,63],[-75,62],[-64,60],[-55,52],[-66,45],[-70,42],[-76,35],[-81,31],[-80,25],[-83,29],[-90,30],[-97,27],[-97,21],[-92,18],[-87,21],[-88,16],[-83,10],[-79,9],[-80,8],[-86,12],[-92,15],[-105,20],[-110,24],[-114,30],[-117,32],[-121,35],[-124,42],[-125,48],[-131,55],[-140,60],[-150,61],[-158,58],[-165,62]],
+  [[-55,60],[-42,60],[-22,70],[-20,77],[-35,83],[-60,82],[-70,77],[-55,70]],
+  [[-80,8],[-73,12],[-62,11],[-52,5],[-50,0],[-44,-2],[-35,-6],[-37,-12],[-40,-22],[-48,-28],[-53,-34],[-58,-38],[-65,-42],[-66,-47],[-69,-52],[-72,-50],[-74,-43],[-73,-36],[-71,-28],[-70,-18],[-76,-14],[-81,-6],[-80,-1]],
+  [[-10,36],[-9,43],[-2,43],[-1,46],[-5,48],[2,51],[8,54],[8,57],[5,59],[6,62],[14,66],[20,70],[28,71],[40,68],[33,66],[30,61],[24,60],[22,65],[17,61],[18,57],[12,56],[14,54],[22,55],[28,57],[30,60],[38,57],[44,47],[40,42],[30,41],[26,40],[24,37],[22,40],[19,42],[16,40],[18,38],[13,45],[8,44],[3,43],[-1,37],[-6,36]],
+  [[-17,21],[-16,28],[-10,32],[-6,36],[10,37],[11,33],[20,31],[30,31],[33,31],[35,24],[38,18],[43,12],[51,11],[48,4],[40,-3],[39,-10],[40,-15],[36,-23],[33,-27],[28,-33],[20,-35],[18,-30],[12,-18],[13,-9],[9,-1],[9,4],[3,6],[-4,5],[-8,4],[-13,8],[-17,14]],
+  [[30,41],[36,36],[35,33],[34,28],[39,21],[43,13],[48,14],[52,16],[57,19],[59,23],[56,26],[51,27],[48,30],[52,28],[57,26],[62,25],[67,25],[70,21],[73,16],[77,8],[80,15],[86,20],[90,22],[94,17],[98,16],[100,13],[100,7],[104,1],[105,9],[109,12],[109,20],[114,22],[120,25],[122,30],[121,35],[118,38],[122,40],[126,38],[129,35],[129,40],[132,43],[140,48],[142,54],[136,55],[142,59],[156,61],[160,61],[178,65],[180,69],[170,70],[160,70],[150,72],[140,72],[130,71],[115,74],[105,77],[95,76],[80,73],[70,73],[66,69],[58,70],[52,68],[44,68],[40,66],[34,69],[30,61],[38,57],[44,47],[40,42]],
+  [[95,5],[98,2],[104,-3],[106,-6],[114,-8],[120,-9],[118,-5],[116,-3],[118,1],[110,2],[104,1],[100,4]],
+  [[131,-1],[138,-3],[146,-6],[150,-10],[141,-9],[137,-5]],
+  [[130,31],[133,34],[137,35],[140,35],[141,38],[142,41],[141,45],[145,44],[142,40],[140,37],[135,33]],
+  [[114,-22],[114,-26],[115,-34],[118,-35],[124,-33],[131,-31],[135,-35],[138,-34],[141,-38],[146,-39],[150,-37],[153,-30],[153,-25],[146,-19],[145,-15],[142,-11],[136,-12],[136,-15],[130,-12],[126,-14],[122,-18]],
+  [[-5,50],[1,51],[2,53],[-1,55],[-2,57],[-5,58],[-6,56],[-5,54],[-3,53],[-5,52]],
+  [[-8,52],[-6,54],[-10,54],[-10,52]],
+  [[44,-12],[50,-15],[50,-23],[45,-25],[44,-18]],
+  [[80,7],[82,8],[81,6],[80,6]],
+  [[120,22],[122,25],[121,22]],
+  [[166,-46],[174,-41],[178,-38],[174,-45],[168,-47]],
+];
+// day and night at 12:00 UTC on 24 November: the sun stands over lon 0, lat -20.6
+const DEC = -20.6 * Math.PI / 180, SUBLON = 0;
+let night = '';
+for (let gx = 0; gx < MW; gx += 2) for (let gy = 0; gy < MH; gy += 2) {
+  const lon = gx / MW * 290 - 130, lat = 75 - gy / MH * 125;
+  const f = lat * Math.PI / 180, hA = (lon - SUBLON) * Math.PI / 180;
+  const cz = Math.sin(f) * Math.sin(DEC) + Math.cos(f) * Math.cos(DEC) * Math.cos(hA);
+  if (cz < 0) night += `M${gx} ${gy}h2v2h-2z`;
+}
+const grat = [];
+for (let lo = -120; lo <= 150; lo += 30) grat.push(`M${px(lo).toFixed(1)} 0V${MH}`);
+for (let la = 60; la >= -40; la -= 20) grat.push(`M0 ${py(la).toFixed(1)}H${MW}`);
+document.getElementById('map').innerHTML = `
+  <rect width="${MW}" height="${MH}" fill="var(--sea2)" rx="4"/>
+  <path d="${grat.join('')}" stroke="#2a4a6a" stroke-width=".7"/>
+  ${LAND.map(p => `<polygon points="${p.map(([lo, la]) => `${px(lo).toFixed(1)},${py(la).toFixed(1)}`).join(' ')}" fill="var(--land)" stroke="#f7efd9" stroke-width=".8"/>`).join('')}
+  <path d="${night}" fill="#000" opacity=".28"/>
+  ${T(px(-125), py(-46), 9, '#9fc0dd', 'NIGHT SIDE AT 12:00 UTC', 'start', 800)}`;
+
+// ---------- cards, leader lines and pins ----------
+const kick = c => `<div class="kick"><span><span class="num">${c.n}</span>${c.place}</span><span class="st" style="background:${ST[c.s][1]}">${ST[c.s][0]}</span></div>`;
+document.getElementById('cards').innerHTML = CARDS.map(c => {
+  const [x, y, w, h] = c.box;
+  const artH = c.lead ? (c.n === 3 ? 118 : c.n === 1 ? 52 : 58) : (h > 120 ? 54 : 34);
+  const art = ART[c.art].replace('<svg ', `<svg class="art" style="height:${artH}px" preserveAspectRatio="xMidYMid slice" `);
+  return `<div class="card${c.lead ? ' lead' : ''}" data-fit style="--c:${REG[c.r]};left:${x}px;top:${y}px;width:${w}px;height:${h}px">`
+    + art + `<div class="b">${kick(c)}<h3>${c.h}</h3>${c.p ? `<p>${c.p}</p>` : ''}</div></div>`;
+}).join('');
+
+let lines = '', pins = '';
+const seen = new Map();
+for (const c of CARDS) {
+  const [lon, lat] = c.ll, X = MX + px(lon), Y = MY + py(lat);
+  const [x, y, w, h] = c.box;
+  // attach each line to the card edge that faces the map
+  const ax = x + w < MX ? x + w : x > MX + MW ? x : Math.min(Math.max(X, x + 12), x + w - 12);
+  const ay = y + h < MY ? y + h : y > MY + MH ? y : Math.min(Math.max(Y, y + 12), y + h - 12);
+  const key = `${lon},${lat}`, k = seen.get(key) || 0; seen.set(key, k + 1);
+  const PX = X + k * 11;
+  lines += `<path d="M${ax} ${ay} L${PX.toFixed(1)} ${Y.toFixed(1)}" stroke="${c.lead ? '#ff6b5a' : '#ffcf5a'}" stroke-width="${c.lead ? 2 : 1.2}" opacity=".9"/>`;
+  pins += `<g transform="translate(${PX.toFixed(1)} ${Y.toFixed(1)})"><circle r="6.4" fill="${c.lead ? '#c62b2b' : '#14161b'}" stroke="#fff" stroke-width="1.3"/><text y="3" text-anchor="middle" font-family="Inter" font-weight="900" font-size="${c.n > 9 ? 6.8 : 8}" fill="#fff">${c.n}</text></g>`;
+}
+document.getElementById('lines').innerHTML = lines + pins;
+
+// ---------- header + band ----------
+const total = CARDS.length + MORE.reduce((a, m) => a + m[2].length, 0);
+document.getElementById('sub').textContent = `${total} stories, each pinned where it happened · leads in red ·`;
+let n = CARDS.length;
+document.getElementById('cols').innerHTML = MORE.map(([title, r, items]) =>
+  `<div style="--c:${REG[r]}"><h4>${title}</h4>${items.map(([p, t]) => `<div class="it"><span class="n">${++n}</span><b>${p}</b> ${t}</div>`).join('')}</div>`).join('');
+</script>
+</body>
+</html>
